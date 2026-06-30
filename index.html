@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Linear Gestão Pro é um ERP Lite para orçamentos e financeiro com suporte PWA e backup local." />
+  <meta name="keywords" content="ERP, orçamento, financeiro, gestão, PWA, Linear, orçamentos, contratos, clientes" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Linear Gestão Pro" />
+  <meta property="og:description" content="ERP Lite para orçamentos e financeiro com suporte PWA e backup local." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://augusto23brandini.github.io/site-de-or-amento-da-linear/" />
+  <meta property="og:image" content="https://augusto23brandini.github.io/site-de-or-amento-da-linear/assets/icon-512.png" />
+  <link rel="canonical" href="https://augusto23brandini.github.io/site-de-or-amento-da-linear/" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Linear Gestão Pro" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Linear Gestão Pro</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <div id="app" class="app-shell">
+    <aside class="sidebar" aria-label="Barra lateral de navegação">
+      <div class="brand">
+        <img class="brand-logo" src="assets/logo-linear.jpeg" alt="Logo Linear Planejados" />
+        <div>
+          <strong>Linear Gestão Pro</strong>
+          <small>ERP Lite • Orçamentos + Financeiro</small>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Menu principal">
+        <button data-page="dashboard" class="active">Dashboard</button>
+        <button data-page="orcamentos">Orçamentos</button>
+        <button data-page="contratos">Contratos</button>
+        <button data-page="financeiro">Financeiro</button>
+        <button data-page="produtos">Produtos/Custos</button>
+        <button data-page="clientes">Clientes</button>
+        <button data-page="projetos">Projetos</button>
+        <button data-page="relatorios">Relatórios</button>
+        <button data-page="config">Configurações</button>
+      </nav>
+      <div class="sync-card">
+        <strong>Sincronização</strong>
+        <small id="syncStatus">Local ativo</small>
+        <button id="syncNowBtn" class="secondary">Sincronizar Supabase</button>
+      </div>
+    </aside>
+
+    <main id="main-content" class="main" role="main">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Dashboard</h1>
+          <p id="pageSubtitle">Visão geral financeira e operacional da Linear.</p>
+        </div>
+        <div class="top-actions">
+          <button id="exportBtn" class="secondary">Exportar backup</button>
+          <label class="import-btn secondary">Importar backup<input id="importFile" type="file" accept="application/json" hidden></label>
+          <button id="installBtn" class="primary hidden">Instalar app</button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="page active"></section>
+      <section id="orcamentos" class="page"></section>
+      <section id="contratos" class="page"></section>
+      <section id="financeiro" class="page"></section>
+      <section id="produtos" class="page"></section>
+      <section id="clientes" class="page"></section>
+      <section id="projetos" class="page"></section>
+      <section id="relatorios" class="page"></section>
+      <section id="config" class="page"></section>
+    </main>
+  </div>
+
+  <template id="modalTpl">
+    <div class="modal-backdrop">
+      <div class="modal">
+        <div class="modal-head">
+          <h2></h2>
+          <button class="icon close-modal">×</button>
+        </div>
+        <div class="modal-body"></div>
+      </div>
+    </div>
+  </template>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+  <script defer src="app.js"></script>
+</body>
+</html>
