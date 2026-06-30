@@ -85,7 +85,7 @@ function createLocalBackup(reason = 'manual') {
   state.localBackups = Array.isArray(state.localBackups) ? state.localBackups : [];
   state.localBackups.unshift(backup);
   state.localBackups = state.localBackups.slice(0, 20);
-  saveSilent();
+  save();
   return backup;
 }
 function exportBackupData(data, name) { const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.style.display = 'none'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href); }
