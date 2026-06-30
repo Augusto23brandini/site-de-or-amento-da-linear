@@ -7,6 +7,7 @@ Sistema local/PWA para gestão da Linear Móveis Planejados.
 1. Extraia o ZIP.
 2. Abra o arquivo `index.html` no navegador.
 3. Para instalar no celular/PC, use a opção do navegador **Instalar app** ou **Adicionar à tela inicial**.
+4. Para salvar os dados que estão no navegador local, clique em **Exportar backup** e salve o arquivo JSON.
 
 ## Novidades V9.6
 

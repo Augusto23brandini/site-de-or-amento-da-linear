@@ -88,7 +88,7 @@ function createLocalBackup(reason = 'manual') {
   saveSilent();
   return backup;
 }
-function exportBackupData(data, name) { const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click(); URL.revokeObjectURL(a.href); }
+function exportBackupData(data, name) { const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.style.display = 'none'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href); }
 function daysUntil(date) { const d = new Date(String(date || todayISO()) + 'T00:00:00'); const now = new Date(todayISO() + 'T00:00:00'); return Math.round((d - now) / 86400000); }
 function dueLabel(date) { const n = daysUntil(date); if (n < 0) return `vencido há ${Math.abs(n)} dia(s)`; if (n === 0) return 'vence hoje'; if (n === 1) return 'vence amanhã'; return `vence em ${n} dia(s)`; }
 function dueClass(date) { const n = daysUntil(date); return n < 0 ? 'bad' : n <= 3 ? 'bad' : n <= 7 ? 'warn' : 'ok'; }
@@ -490,10 +490,10 @@ function resetSystemSafe() {
 }
 function restoreLocalBackup(id) { const b = (state.localBackups || []).find(x => x.id === id); if (!b) return; if (!confirm('Restaurar este backup? Os dados atuais serão substituídos.')) return; const keep = state.localBackups || []; state = mergeDefaults(DEFAULT, b.data); state.localBackups = keep; save(); alert('Backup restaurado.'); }
 function downloadLocalBackup(id) { const b = (state.localBackups || []).find(x => x.id === id); if (!b) return; exportBackupData(b.data, 'backup-linear-interno-' + String(b.createdAt).slice(0,10) + '.json'); }
-function importBackup(file) { const r = new FileReader(); r.onload = () => { try { state = mergeDefaults(DEFAULT, JSON.parse(r.result)); save(); alert('Backup importado.'); } catch (e) { alert('Arquivo inválido.'); } }; r.readAsText(file); }
+function importBackup(file) { const r = new FileReader(); r.onload = () => { try { state = mergeDefaults(DEFAULT, JSON.parse(r.result)); save(); alert('Backup importado.'); } catch (e) { alert('Arquivo inválido.'); } finally { document.getElementById('importFile').value = ''; } }; r.readAsText(file); }
 
 document.getElementById('exportBtn').onclick = exportBackup;
-document.getElementById('importFile').onchange = e => e.target.files[0] && importBackup(e.target.files[0]);
+document.getElementById('importFile').onchange = e => { const file = e.target.files[0]; if (file) importBackup(file); };
 document.getElementById('syncNowBtn').onclick = syncSupabase;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').classList.remove('hidden'); });
 document.getElementById('installBtn').onclick = async () => { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; } };
